@@ -1,0 +1,18 @@
+# Use Node for dev
+FROM node:20-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Install dependencies first (cache better)
+COPY package*.json ./
+RUN npm install
+
+# Copy rest of project
+COPY . .
+
+# Expose Vite dev port
+EXPOSE 5173
+
+# Run vite in dev mode with host binding
+CMD ["npm", "run", "dev", "--", "--host", "--port", "5173"]
